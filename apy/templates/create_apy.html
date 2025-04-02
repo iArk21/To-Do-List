@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Creacion de tareas</h1>
+
+{{error}}
+
+<form action="/apy/create/" method="POST">
+
+    {% csrf_token %}
+
+{{form}}
+
+<button>
+    Guardar
+</button>
+
+</form>
+
+{% endblock %}
