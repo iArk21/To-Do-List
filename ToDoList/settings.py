@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'ToDoList.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresq://postgres:postgres@localhost/postgres',
+        default='postgres://postgres:postgres@localhost/postgres',
         conn_max_age=600
     )
 }
