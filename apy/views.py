@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -5,8 +6,9 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import ApyForm
 from .models import Apy
+import json
 from django.contrib.auth.decorators import login_required
-
+from .forms import CustomUserCreationForm
 
 # Create your views here.
 
@@ -19,26 +21,19 @@ def signup(request):
 
     if request.method == 'GET':
         return  render(request, 'signup.html',{
-           'form': UserCreationForm
+           'form': CustomUserCreationForm()
         })
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                #registrar usuario
-                user=User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
-                user.save()
-                login(request, user)
-                return redirect('apy')
-            except IntegrityError:
-                return  render(request, 'signup.html',{
-                'form': UserCreationForm,
-                "error": 'El usuario ya existe'
-                }) 
-
-        return  render(request, 'signup.html',{
-           'form': UserCreationForm,
-           "error": 'Las contraseñas no coinciden'
-        })
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('apy')
+        else:
+            return render(request, 'signup.html', {
+                'form': form,
+                'error': 'Revisa los datos ingresados.'
+            })
 @login_required       
 def apy(request):
     apys = Apy.objects.filter(user = request.user)
@@ -88,4 +83,20 @@ def autenticar(request):
             login(request, user)
             return redirect('apy')
 
-        
+@login_required
+def calendario_apy(request):
+    apys = Apy.objects.filter(user=request.user)
+
+    eventos = []
+    for apy in apys:
+        if apy.fecha:  # 👈 validamos que tenga fecha
+            eventos.append({
+                'title': apy.titulo,
+                'start': apy.fecha.isoformat(),
+                'color': '#dc3545' if apy.importancia else '#0d6efd'
+            })
+
+    return render(request, 'calendario.html', {
+        'eventos': json.dumps(eventos)
+    })
+

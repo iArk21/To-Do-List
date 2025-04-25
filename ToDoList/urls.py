@@ -26,6 +26,7 @@ urlpatterns = [
     path('apy/create/', views.create_apy, name='create_apy'),
     path('logout/', views.salida, name='logout'),
     path('autenticar/', views.autenticar, name='autenticar'),
+    path('apy/calendario/', views.calendario_apy, name='calendario_apy'),
 
 
  

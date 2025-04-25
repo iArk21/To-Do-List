@@ -1,27 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <main class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h1 class="text-center display-3 py-5">Tareas</h1>
+        <div class="col-md-8 offset-md-2">
+            <h1 class="text-center display-4 py-4">Mis Tareas</h1>
 
-            <ul class="list-group">
+            <!-- Botón para crear nueva tarea -->
+            <div class="text-end mb-4">
+                <a href="{% url 'create_apy' %}" class="btn btn-success">
+                    + Nueva tarea
+                </a>
+                <a href="{% url 'calendario_apy' %}" class="btn btn-outline-secondary">
+                    Ver calendario 
+                </a>
+            </div>
+
+            {% if Tareas %}
                 {% for apy in Tareas %}
-                <header class="d-flex justify-content-between">
-                    <li class="list-group-item">{{apy.titulo}}</li>
-                    <p>{{apy.user.username}}</p>
-                </header>
-                
-
+                    <div class="card mb-3 {% if apy.importancia %}border-danger bg-light{% endif %}">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ apy.titulo }}
+                                {% if apy.importancia %}
+                                    <span class="badge bg-danger ms-2">Importante</span>
+                                {% endif %}
+                            </h5>
+                            <p class="card-text">{{ apy.descripcion }}</p>
+                            <p class="card-text text-muted">
+                                <strong>Fecha límite: </strong>{{ apy.fecha|date:"d M Y"}}<br>
+                                <strong>Creado: </strong>{{ apy.creacion|date:"d M Y - H:i"}}
+                            </p>
+                            <p class="card-text text-end">
+                                <small class="text-muted">Usuario: {{ apy.user.username }}</small>
+                            </p>
+                        </div>
+                    </div>
                 {% endfor %}
-            </ul>
-
+            {% else %}
+                <p class="text-center">No tienes tareas registradas aún.</p>
+            {% endif %}
         </div>
-
     </div>
-
 </main>
-
 {% endblock %}
