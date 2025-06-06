@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-danger text-center mb-4">Confirmar Eliminación</h2>
+
+    <div class="alert alert-warning shadow-sm">
+        <strong>¿Estás seguro de que deseas eliminar al usuario "{{ usuario.username }}"?</strong>
+    </div>
+
+    <form method="post" class="d-flex justify-content-between">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        <a href="{% url 'gestionar_usuarios' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

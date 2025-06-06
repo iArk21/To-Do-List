@@ -6,6 +6,72 @@
         <div class="col-md-8 offset-md-2">
             <h1 class="text-center display-4 py-4">Mis Tareas</h1>
 
+            {% if tareas_proximas or tareas_urgentes %}
+                <div class="text-center mb-3">
+                    <span style="font-size: 2rem;" title="Tienes tareas por vencer">
+                        🔔
+                    </span>
+                </div>
+            {% endif %}
+
+
+            {% if tareas_proximas %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>¡Atención!</strong> Tienes tareas próximas a vencer:
+                    <ul>
+                        {% for tarea in tareas_proximas %}
+                            <li>{{ tarea.titulo }} - vence en {{ tarea.dias_restantes }} día(s)</li>
+                        {% endfor %}
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            {% endif %}
+
+
+            {% if tareas_urgentes %}
+                <div id="alerta-central" style="
+                    position: fixed;
+                    top: 30%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 9999;
+                    background-color: #ff4d4d;
+                    color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+                    text-align: center;
+                ">
+                    <button onclick="cerrarAlertaCentral()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        background: none;
+                        border: none;
+                        font-size: 1.2rem;
+                        color: white;
+                        cursor: pointer;
+                    ">❌</button>
+                    <h3>⚠️ ¡Tareas urgentes!</h3>
+                    <p>Estas tareas vencen hoy o mañana:</p>
+                    <ul>
+                    {% for tarea in tareas_urgentes %}
+                        <li><strong>{{ tarea.titulo }}</strong> - vence en {{ tarea.dias_restantes }} día(s)</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+
+
+                <script>
+                    function cerrarAlertaCentral() {
+                        document.getElementById("alerta-central").style.display = "none";
+                    }
+                </script>
+            {% endif %}
+
+
+
+
             <!-- Botón para crear nueva tarea -->
             <div class="text-end mb-4">
                 <a href="{% url 'create_apy' %}" class="btn btn-success">
@@ -25,6 +91,15 @@
                                 {% if apy.importancia %}
                                     <span class="badge bg-danger ms-2">Importante</span>
                                 {% endif %}
+                                {% if not apy.completada %}
+                                    <form method="post" action="{% url 'completar_tarea' apy.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-success btn-sm">Marcar como completada</button>
+                                    </form>
+                                {% else %}
+                                    <span class="badge bg-success">Completada</span>
+                                {% endif %}
+
                             </h5>
                             <p class="card-text">{{ apy.descripcion }}</p>
                             <p class="card-text text-muted">

@@ -17,8 +17,13 @@
             color: #333;
         }
         .navbar {
+<<<<<<< HEAD
             background-color: #333;  /* Fondo negro de la navbar */
             padding: 0rem 0rem;  /* Reduce el padding vertical sin afectar el texto */
+=======
+            background-color: #333;
+            padding: 0rem 0rem;
+>>>>>>> 51e1ec2 (Se agregó la funcion de alertas, tambien que el usuario pueda marcar la tarea como completada y se corrigieron algunos detalles que no aparecian a la hora de ingresar como administrador y gestionar, que en las tareas no aparecian el usuario ni fecha limite)
         }
         .navbar-brand {
             font-size: 3rem;
@@ -52,6 +57,7 @@
                         <a href="/apy" class="nav-link">Tareas</a>
                     </li>
                     {% if user.is_authenticated %}
+<<<<<<< HEAD
                     <li class="nav-item">
                         <a href="/logout" class="nav-link">Salir</a>
                     </li>
@@ -62,6 +68,23 @@
                     <li class="nav-item">
                         <a href="/autenticar" class="nav-link">Ingresar</a>
                     </li>
+=======
+                        {% if user.rol == 'gerente' %}
+                            <li class="nav-item">
+                                <a href="{% url 'gestionar' %}" class="nav-link">Gestionar</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a href="/logout" class="nav-link">Salir</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="/signup" class="nav-link">Registrarse</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/autenticar" class="nav-link">Ingresar</a>
+                        </li>
+>>>>>>> 51e1ec2 (Se agregó la funcion de alertas, tambien que el usuario pueda marcar la tarea como completada y se corrigieron algunos detalles que no aparecian a la hora de ingresar como administrador y gestionar, que en las tareas no aparecian el usuario ni fecha limite)
                     {% endif %}
                 </ul>
             </div>

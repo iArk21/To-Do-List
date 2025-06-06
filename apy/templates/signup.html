@@ -46,10 +46,25 @@
                     {{ form.identificacion.errors }}
                 </div>
 
+<<<<<<< HEAD
                 <div class="form-check mb-3">
                     {{ form.es_administrador|add_class:"form-check-input" }}
                     <label class="form-check-label" for="es_administrador">¿Es administrador?</label>
                     {{ form.es_administrador.errors }}
+=======
+                <!-- Campo de rol (Empleado o Gerente) -->
+                <div class="mb-3">
+                    <label for="rol">Rol:</label>
+                    <div>
+                        {{ form.rol.errors }}
+                        {% for value, label in form.rol.field.choices %}
+                            <div class="form-check">
+                                <input type="radio" id="rol_{{ value }}" name="{{ form.rol.name }}" value="{{ value }}" class="form-check-input" {% if form.rol.value == value %} checked {% endif %}>
+                                <label class="form-check-label" for="rol_{{ value }}">{{ label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+>>>>>>> 51e1ec2 (Se agregó la funcion de alertas, tambien que el usuario pueda marcar la tarea como completada y se corrigieron algunos detalles que no aparecian a la hora de ingresar como administrador y gestionar, que en las tareas no aparecian el usuario ni fecha limite)
                 </div>
 
                 <div class="mb-3">

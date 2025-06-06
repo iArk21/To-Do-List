@@ -27,6 +27,16 @@ urlpatterns = [
     path('logout/', views.salida, name='logout'),
     path('autenticar/', views.autenticar, name='autenticar'),
     path('apy/calendario/', views.calendario_apy, name='calendario_apy'),
+    path('gerente/usuarios/', views.gestionar_usuarios, name='gestionar_usuarios'),
+    path('gerente/usuarios/crear/', views.crear_usuario, name='crear_usuario'),
+    path('gerente/usuarios/editar/<int:pk>/', views.editar_usuario, name='editar_usuario'),
+    path('gerente/usuarios/eliminar/<int:pk>/', views.eliminar_usuario, name='eliminar_usuario'),
+    path('gestionar/', views.gestionar, name='gestionar'),
+    path('gerente/tareas/', views.gestionar_tareas, name='gestionar_tareas'),
+    path('gerente/tareas/editar/<int:tarea_id>/', views.editar_tarea, name='editar_tarea'),
+    path('gerente/tareas/eliminar/<int:tarea_id>/', views.eliminar_tarea, name='eliminar_tarea'),
+    path('tarea/<int:tarea_id>/completar/', views.completar_tarea, name='completar_tarea'),
+
 
 
  

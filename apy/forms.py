@@ -3,6 +3,11 @@ from .models import Apy
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
+<<<<<<< HEAD
+=======
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+>>>>>>> 51e1ec2 (Se agregó la funcion de alertas, tambien que el usuario pueda marcar la tarea como completada y se corrigieron algunos detalles que no aparecian a la hora de ingresar como administrador y gestionar, que en las tareas no aparecian el usuario ni fecha limite)
 
 class ApyForm(forms.ModelForm):
     class Meta:
@@ -40,8 +45,27 @@ class CustomUserCreationForm(UserCreationForm):
     nombre = forms.CharField(label="Nombre", required=True)
     apellido = forms.CharField(label="Apellido", required=True)
     identificacion = forms.CharField(label="Identificación", required=True)
+<<<<<<< HEAD
     es_administrador = forms.BooleanField(required=False, label="¿Es administrador?")
 
     class Meta:
         model = CustomUser
         fields = ['username', 'nombre', 'apellido', 'email', 'identificacion', 'es_administrador', 'password1', 'password2' ]
+=======
+    rol = forms.ChoiceField(choices=CustomUser.ROL_CHOICES, widget=forms.RadioSelect)  # Aquí agregamos el rol con las opciones
+
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'nombre', 'apellido', 'email', 'identificacion', 'rol', 'password1', 'password2' ]
+
+
+
+class EditarUsuarioForm(UserChangeForm):
+    password = None  # para no mostrar el campo de contraseña
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'nombre', 'apellido', 'email', 'identificacion', 'rol']
+
+>>>>>>> 51e1ec2 (Se agregó la funcion de alertas, tambien que el usuario pueda marcar la tarea como completada y se corrigieron algunos detalles que no aparecian a la hora de ingresar como administrador y gestionar, que en las tareas no aparecian el usuario ni fecha limite)
